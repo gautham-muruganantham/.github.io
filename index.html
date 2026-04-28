@@ -1,7 +1,149 @@
-html
-
 <!doctype html>
-<html>
-  <head><meta charset="UTF-8"><title>Dummy Page</title></head>
-  <body><h1>Hello World</h1></body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matrimony Sample</title>
+  <style>
+    :root{
+      --primary:#e91e63; --dark:#1f2937; --muted:#6b7280; --bg:#f8fafc; --card:#ffffff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Segoe UI,Arial,sans-serif}
+    body{background:var(--bg);color:var(--dark)}
+    .container{max-width:1100px;margin:auto;padding:0 16px}
+    nav{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10}
+    nav .row{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+    .logo{font-size:1.2rem;font-weight:700;color:var(--primary)}
+    .menu a{text-decoration:none;color:var(--dark);margin-left:16px;font-size:.95rem}
+    .hero{padding:56px 0;background:linear-gradient(135deg,#fff0f6,#ffffff)}
+    .hero h1{font-size:2rem;margin-bottom:10px}
+    .hero p{color:var(--muted);margin-bottom:18px}
+    .btn{background:var(--primary);color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer}
+    .card{background:var(--card);border:1px solid #eee;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
+    .search{padding:20px;margin-top:20px}
+    .grid{display:grid;gap:14px}
+    .search-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+    input,select{padding:10px;border:1px solid #d1d5db;border-radius:8px;width:100%}
+    section{padding:34px 0}
+    .section-title{font-size:1.4rem;margin-bottom:14px}
+    .profiles{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .profile{padding:14px}
+    .avatar{width:56px;height:56px;border-radius:50%;background:#ffd6e7;display:flex;align-items:center;justify-content:center;font-weight:700;color:#a11}
+    .profile-top{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+    .meta{color:var(--muted);font-size:.9rem;line-height:1.45}
+    .tag{display:inline-block;margin-top:8px;background:#f3f4f6;color:#374151;padding:4px 8px;border-radius:999px;font-size:.75rem}
+    .plans{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .plan{padding:18px}
+    .price{font-size:1.5rem;font-weight:700;color:var(--primary);margin:8px 0}
+    footer{padding:24px 0;border-top:1px solid #eee;color:var(--muted);font-size:.9rem;text-align:center}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container row">
+      <div class="logo">MatrimonyMatch</div>
+      <div class="menu">
+        <a href="#search">Search</a>
+        <a href="#profiles">Profiles</a>
+        <a href="#plans">Plans</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1>Find Your Perfect Life Partner</h1>
+      <p>Trusted matrimony sample portal with verified profiles and easy matching.</p>
+      <button class="btn">Create Free Profile</button>
+
+      <div id="search" class="card search">
+        <div class="grid search-grid">
+          <input id="ageMin" type="number" placeholder="Min age (e.g. 24)" />
+          <input id="ageMax" type="number" placeholder="Max age (e.g. 30)" />
+          <select id="community">
+            <option value="">Any community</option>
+            <option>Hindu</option>
+            <option>Christian</option>
+            <option>Muslim</option>
+          </select>
+          <select id="location">
+            <option value="">Any location</option>
+            <option>Chennai</option>
+            <option>Bengaluru</option>
+            <option>Coimbatore</option>
+          </select>
+          <button class="btn" onclick="filterProfiles()">Search</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="profiles">
+    <div class="container">
+      <h2 class="section-title">Featured Profiles</h2>
+      <div class="grid profiles" id="profileList"></div>
+    </div>
+  </section>
+
+  <section id="plans">
+    <div class="container">
+      <h2 class="section-title">Membership Plans</h2>
+      <div class="grid plans">
+        <div class="card plan"><h3>Free</h3><div class="price">₹0</div><p class="meta">Basic profile + limited interests.</p></div>
+        <div class="card plan"><h3>Classic</h3><div class="price">₹999</div><p class="meta">View contacts + chat with matches.</p></div>
+        <div class="card plan"><h3>Premium</h3><div class="price">₹1999</div><p class="meta">Priority listing + advanced filters.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2026 MatrimonyMatch Sample. Built for demo purposes.</footer>
+
+  <script>
+    const profiles = [
+      { name:"Ananya R", age:26, community:"Hindu", location:"Chennai", role:"Software Engineer" },
+      { name:"Priya M", age:28, community:"Christian", location:"Bengaluru", role:"Product Designer" },
+      { name:"Karthik S", age:29, community:"Hindu", location:"Coimbatore", role:"Data Analyst" },
+      { name:"Rahman A", age:27, community:"Muslim", location:"Chennai", role:"Architect" },
+      { name:"Deepa N", age:25, community:"Hindu", location:"Bengaluru", role:"Doctor" },
+      { name:"Joel P", age:30, community:"Christian", location:"Coimbatore", role:"Consultant" }
+    ];
+
+    function render(list){
+      const box = document.getElementById("profileList");
+      box.innerHTML = "";
+      if(!list.length){ box.innerHTML = "<p class='meta'>No profiles found for selected filters.</p>"; return; }
+      list.forEach(p => {
+        const initials = p.name.split(" ").map(x=>x[0]).join("").slice(0,2);
+        box.innerHTML += `
+          <div class="card profile">
+            <div class="profile-top">
+              <div class="avatar">${initials}</div>
+              <div>
+                <h3>${p.name}</h3>
+                <p class="meta">${p.age} yrs • ${p.role}</p>
+              </div>
+            </div>
+            <p class="meta">${p.location} • ${p.community}</p>
+            <span class="tag">Verified Profile</span>
+          </div>`;
+      });
+    }
+
+    function filterProfiles(){
+      const min = Number(document.getElementById("ageMin").value || 0);
+      const max = Number(document.getElementById("ageMax").value || 99);
+      const community = document.getElementById("community").value;
+      const location = document.getElementById("location").value;
+
+      const result = profiles.filter(p =>
+        p.age >= min && p.age <= max &&
+        (!community || p.community === community) &&
+        (!location || p.location === location)
+      );
+      render(result);
+    }
+
+    render(profiles);
+  </script>
+</body>
 </html>
