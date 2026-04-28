@@ -3,76 +3,168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matrimony Sample</title>
+  <title>MatrimonyMatch - Demo</title>
   <style>
     :root{
-      --primary:#e91e63; --dark:#1f2937; --muted:#6b7280; --bg:#f8fafc; --card:#ffffff;
+      --primary:#e11d48;
+      --primary-dark:#be123c;
+      --accent:#f59e0b;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --bg:#fff7f9;
+      --card:#ffffff;
+      --border:#e5e7eb;
+      --shadow:0 10px 25px rgba(0,0,0,.08);
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Segoe UI,Arial,sans-serif}
-    body{background:var(--bg);color:var(--dark)}
-    .container{max-width:1100px;margin:auto;padding:0 16px}
-    nav{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10}
-    nav .row{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
-    .logo{font-size:1.2rem;font-weight:700;color:var(--primary)}
-    .menu a{text-decoration:none;color:var(--dark);margin-left:16px;font-size:.95rem}
-    .hero{padding:56px 0;background:linear-gradient(135deg,#fff0f6,#ffffff)}
-    .hero h1{font-size:2rem;margin-bottom:10px}
-    .hero p{color:var(--muted);margin-bottom:18px}
-    .btn{background:var(--primary);color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer}
-    .card{background:var(--card);border:1px solid #eee;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
-    .search{padding:20px;margin-top:20px}
-    .grid{display:grid;gap:14px}
-    .search-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
-    input,select{padding:10px;border:1px solid #d1d5db;border-radius:8px;width:100%}
-    section{padding:34px 0}
-    .section-title{font-size:1.4rem;margin-bottom:14px}
-    .profiles{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    .profile{padding:14px}
-    .avatar{width:56px;height:56px;border-radius:50%;background:#ffd6e7;display:flex;align-items:center;justify-content:center;font-weight:700;color:#a11}
-    .profile-top{display:flex;gap:12px;align-items:center;margin-bottom:10px}
-    .meta{color:var(--muted);font-size:.9rem;line-height:1.45}
-    .tag{display:inline-block;margin-top:8px;background:#f3f4f6;color:#374151;padding:4px 8px;border-radius:999px;font-size:.75rem}
-    .plans{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    .plan{padding:18px}
-    .price{font-size:1.5rem;font-weight:700;color:var(--primary);margin:8px 0}
-    footer{padding:24px 0;border-top:1px solid #eee;color:var(--muted);font-size:.9rem;text-align:center}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:#fff}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1150px;margin:0 auto;padding:0 16px}
+
+    .topbar{background:#111827;color:#fff;font-size:13px}
+    .topbar .container{padding:8px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+    .nav{border-bottom:1px solid var(--border);background:#fff;position:sticky;top:0;z-index:20}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{font-weight:800;font-size:1.2rem;color:var(--primary)}
+    .menu{display:flex;gap:18px;font-size:.95rem}
+    .menu a{color:#374151}
+    .btn{border:none;border-radius:10px;padding:11px 16px;font-weight:600;cursor:pointer}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark)}
+    .btn-light{background:#fff;border:1px solid var(--border)}
+
+    .hero{
+      background:linear-gradient(120deg,#fff1f2 0%,#fff 45%,#fff 100%);
+      padding:52px 0 30px;
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;
+    }
+    .hero h1{font-size:2.3rem;line-height:1.2;margin:0 0 10px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .badge{padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:.8rem}
+    .stat-row{display:flex;gap:14px;flex-wrap:wrap}
+    .stat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 12px;min-width:130px}
+    .stat b{display:block;font-size:1.1rem}
+
+    .search-card{
+      background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:16px;
+    }
+    .search-title{font-size:1.05rem;font-weight:700;margin-bottom:12px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .form-grid .full{grid-column:1/-1}
+    input,select{
+      width:100%;padding:11px;border:1px solid #d1d5db;border-radius:10px;background:#fff;
+    }
+
+    section{padding:42px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:16px}
+    .section-head h2{margin:0;font-size:1.5rem}
+    .section-head p{margin:6px 0 0;color:var(--muted)}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{
+      border:1px solid var(--border);border-radius:14px;background:#fff;padding:14px;
+    }
+    .profile-top{display:flex;gap:12px;align-items:center}
+    .avatar{
+      width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-weight:700;background:#ffe4e6;color:#9f1239
+    }
+    .meta{color:var(--muted);font-size:.92rem}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#f3f4f6;font-size:.75rem;margin-top:8px}
+
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .step{border:1px solid var(--border);border-radius:12px;padding:14px;background:#fff}
+    .step b{display:block;margin-bottom:6px;color:var(--primary)}
+
+    .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .plan{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff}
+    .plan h3{margin:0}
+    .price{font-size:1.7rem;font-weight:800;color:var(--primary);margin:8px 0}
+    .plan ul{margin:10px 0 0 16px;color:#4b5563;padding:0}
+
+    .cta{
+      background:linear-gradient(90deg,#e11d48,#fb7185);color:#fff;border-radius:18px;padding:24px;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+    }
+
+    footer{padding:28px 0;color:var(--muted);font-size:.9rem;text-align:center;border-top:1px solid var(--border);margin-top:34px}
+
+    @media (max-width:960px){
+      .hero-grid{grid-template-columns:1fr}
+      .cards,.plans{grid-template-columns:1fr 1fr}
+      .steps{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:640px){
+      .menu{display:none}
+      .cards,.plans,.steps,.form-grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="container row">
+  <div class="topbar">
+    <div class="container">
+      <div>Demo matrimony website (sample project)</div>
+      <div>Verified Profiles • Safe Search • Mobile Friendly</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="container nav-inner">
       <div class="logo">MatrimonyMatch</div>
       <div class="menu">
-        <a href="#search">Search</a>
         <a href="#profiles">Profiles</a>
+        <a href="#how">How it works</a>
         <a href="#plans">Plans</a>
       </div>
+      <button class="btn btn-light">Login</button>
     </div>
   </nav>
 
   <header class="hero">
-    <div class="container">
-      <h1>Find Your Perfect Life Partner</h1>
-      <p>Trusted matrimony sample portal with verified profiles and easy matching.</p>
-      <button class="btn">Create Free Profile</button>
+    <div class="container hero-grid">
+      <div>
+        <h1>Find your life partner with confidence</h1>
+        <p>Inspired by popular matrimony portals — this is a clean demo with search, featured profiles, plans, and responsive UI.</p>
+        <div class="badges">
+          <span class="badge">100% Demo</span>
+          <span class="badge">No real users</span>
+          <span class="badge">GitHub Pages Ready</span>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b>10,000+</b><span class="meta">Demo Profiles</span></div>
+          <div class="stat"><b>120+</b><span class="meta">Cities</span></div>
+          <div class="stat"><b>95%</b><span class="meta">Profile Verified</span></div>
+        </div>
+      </div>
 
-      <div id="search" class="card search">
-        <div class="grid search-grid">
-          <input id="ageMin" type="number" placeholder="Min age (e.g. 24)" />
-          <input id="ageMax" type="number" placeholder="Max age (e.g. 30)" />
-          <select id="community">
-            <option value="">Any community</option>
+      <div class="search-card">
+        <div class="search-title">Search profiles</div>
+        <div class="form-grid">
+          <select id="lookingFor">
+            <option value="">Looking for</option>
+            <option>Bride</option>
+            <option>Groom</option>
+          </select>
+          <select id="religion">
+            <option value="">Religion</option>
             <option>Hindu</option>
             <option>Christian</option>
             <option>Muslim</option>
           </select>
-          <select id="location">
-            <option value="">Any location</option>
+          <input id="ageFrom" type="number" placeholder="Age from" />
+          <input id="ageTo" type="number" placeholder="Age to" />
+          <select id="city" class="full">
+            <option value="">City</option>
             <option>Chennai</option>
             <option>Bengaluru</option>
             <option>Coimbatore</option>
+            <option>Madurai</option>
           </select>
-          <button class="btn" onclick="filterProfiles()">Search</button>
+          <button class="btn btn-primary full" onclick="applyFilter()">Search Matches</button>
         </div>
       </div>
     </div>
@@ -80,67 +172,126 @@
 
   <section id="profiles">
     <div class="container">
-      <h2 class="section-title">Featured Profiles</h2>
-      <div class="grid profiles" id="profileList"></div>
+      <div class="section-head">
+        <div>
+          <h2>Featured Profiles</h2>
+          <p>Fresh and highlighted demo matches</p>
+        </div>
+      </div>
+      <div class="cards" id="profileList"></div>
+    </div>
+  </section>
+
+  <section id="how" style="background:#fff7f9">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>How it works</h2>
+          <p>Simple 4-step journey</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><b>1. Register</b><div class="meta">Create your profile in 2 minutes.</div></div>
+        <div class="step"><b>2. Search</b><div class="meta">Use filters to find suitable matches.</div></div>
+        <div class="step"><b>3. Connect</b><div class="meta">Send interest and start conversation.</div></div>
+        <div class="step"><b>4. Meet</b><div class="meta">Take your next step with family.</div></div>
+      </div>
     </div>
   </section>
 
   <section id="plans">
     <div class="container">
-      <h2 class="section-title">Membership Plans</h2>
-      <div class="grid plans">
-        <div class="card plan"><h3>Free</h3><div class="price">₹0</div><p class="meta">Basic profile + limited interests.</p></div>
-        <div class="card plan"><h3>Classic</h3><div class="price">₹999</div><p class="meta">View contacts + chat with matches.</p></div>
-        <div class="card plan"><h3>Premium</h3><div class="price">₹1999</div><p class="meta">Priority listing + advanced filters.</p></div>
+      <div class="section-head">
+        <div>
+          <h2>Membership Plans</h2>
+          <p>Choose what fits your needs</p>
+        </div>
+      </div>
+      <div class="plans">
+        <div class="plan">
+          <h3>Free</h3>
+          <div class="price">₹0</div>
+          <ul><li>Create profile</li><li>Limited search</li><li>Send 5 interests</li></ul>
+        </div>
+        <div class="plan">
+          <h3>Classic</h3>
+          <div class="price">₹999</div>
+          <ul><li>Unlimited search</li><li>View contacts</li><li>Priority support</li></ul>
+        </div>
+        <div class="plan">
+          <h3>Premium</h3>
+          <div class="price">₹1999</div>
+          <ul><li>Top profile visibility</li><li>Direct chat</li><li>Personal relationship manager</li></ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer>© 2026 MatrimonyMatch Sample. Built for demo purposes.</footer>
+  <section>
+    <div class="container">
+      <div class="cta">
+        <div>
+          <h3 style="margin:0 0 6px">Start your matrimony journey today</h3>
+          <div style="opacity:.9">Create your free profile and explore quality matches.</div>
+        </div>
+        <button class="btn btn-light">Create Free Profile</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 MatrimonyMatch Demo • Built for sample use only (not affiliated with any brand).
+  </footer>
 
   <script>
     const profiles = [
-      { name:"Ananya R", age:26, community:"Hindu", location:"Chennai", role:"Software Engineer" },
-      { name:"Priya M", age:28, community:"Christian", location:"Bengaluru", role:"Product Designer" },
-      { name:"Karthik S", age:29, community:"Hindu", location:"Coimbatore", role:"Data Analyst" },
-      { name:"Rahman A", age:27, community:"Muslim", location:"Chennai", role:"Architect" },
-      { name:"Deepa N", age:25, community:"Hindu", location:"Bengaluru", role:"Doctor" },
-      { name:"Joel P", age:30, community:"Christian", location:"Coimbatore", role:"Consultant" }
+      {name:"Ananya R", age:26, religion:"Hindu", city:"Chennai", role:"Software Engineer", lookingFor:"Groom"},
+      {name:"Karthik S", age:29, religion:"Hindu", city:"Coimbatore", role:"Data Analyst", lookingFor:"Bride"},
+      {name:"Priya M", age:28, religion:"Christian", city:"Bengaluru", role:"Product Designer", lookingFor:"Groom"},
+      {name:"Rahman A", age:27, religion:"Muslim", city:"Chennai", role:"Architect", lookingFor:"Bride"},
+      {name:"Deepa N", age:25, religion:"Hindu", city:"Madurai", role:"Doctor", lookingFor:"Groom"},
+      {name:"Joel P", age:30, religion:"Christian", city:"Coimbatore", role:"Consultant", lookingFor:"Bride"}
     ];
 
     function render(list){
-      const box = document.getElementById("profileList");
-      box.innerHTML = "";
-      if(!list.length){ box.innerHTML = "<p class='meta'>No profiles found for selected filters.</p>"; return; }
+      const root = document.getElementById("profileList");
+      root.innerHTML = "";
+      if(!list.length){
+        root.innerHTML = `<div class="card"><div class="meta">No profiles found for selected filters.</div></div>`;
+        return;
+      }
       list.forEach(p => {
-        const initials = p.name.split(" ").map(x=>x[0]).join("").slice(0,2);
-        box.innerHTML += `
-          <div class="card profile">
+        const initials = p.name.split(" ").map(v => v[0]).join("").slice(0,2);
+        root.innerHTML += `
+          <div class="card">
             <div class="profile-top">
               <div class="avatar">${initials}</div>
               <div>
-                <h3>${p.name}</h3>
-                <p class="meta">${p.age} yrs • ${p.role}</p>
+                <div style="font-weight:700">${p.name}</div>
+                <div class="meta">${p.age} yrs • ${p.role}</div>
               </div>
             </div>
-            <p class="meta">${p.location} • ${p.community}</p>
-            <span class="tag">Verified Profile</span>
-          </div>`;
+            <div class="meta" style="margin-top:8px">${p.city} • ${p.religion}</div>
+            <span class="pill">Verified</span>
+          </div>
+        `;
       });
     }
 
-    function filterProfiles(){
-      const min = Number(document.getElementById("ageMin").value || 0);
-      const max = Number(document.getElementById("ageMax").value || 99);
-      const community = document.getElementById("community").value;
-      const location = document.getElementById("location").value;
+    function applyFilter(){
+      const lookingFor = document.getElementById("lookingFor").value;
+      const religion = document.getElementById("religion").value;
+      const city = document.getElementById("city").value;
+      const ageFrom = Number(document.getElementById("ageFrom").value || 0);
+      const ageTo = Number(document.getElementById("ageTo").value || 99);
 
-      const result = profiles.filter(p =>
-        p.age >= min && p.age <= max &&
-        (!community || p.community === community) &&
-        (!location || p.location === location)
+      const filtered = profiles.filter(p =>
+        (!lookingFor || p.lookingFor === lookingFor) &&
+        (!religion || p.religion === religion) &&
+        (!city || p.city === city) &&
+        p.age >= ageFrom && p.age <= ageTo
       );
-      render(result);
+      render(filtered);
     }
 
     render(profiles);
