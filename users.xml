@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<users>
+  <user id="u001" name="Demo User" email="demo@matrimony.com" password="Demo@123" gender="Male" age="29" />
+  <user id="u002" name="Ananya R" email="ananya@matrimony.com" password="Demo@123" gender="Female" age="26" />
+  <user id="u003" name="Priya M" email="priya@matrimony.com" password="Demo@123" gender="Female" age="28" />
+  <user id="u004" name="Deepa N" email="deepa@matrimony.com" password="Demo@123" gender="Female" age="25" />
+  <user id="u005" name="Karthik S" email="karthik@matrimony.com" password="Demo@123" gender="Male" age="30" />
+</users>

@@ -1,0 +1,104 @@
+@model Learning.Models.MatrimonyViewModel
+@{
+    ViewData["Title"] = "Matrimony";
+}
+
+<div class="d-flex flex-wrap gap-3 mb-3">
+    <div class="card stat-card">
+        <div class="card-body py-2">
+            <small class="text-muted">Profiles</small>
+            <div class="fs-5 fw-semibold">@Model.Profiles.Count</div>
+        </div>
+    </div>
+    <div class="card stat-card">
+        <div class="card-body py-2">
+            <small class="text-muted">Interests Sent</small>
+            <div class="fs-5 fw-semibold">@Model.InterestCount</div>
+        </div>
+    </div>
+    <div class="card stat-card">
+        <div class="card-body py-2">
+            <small class="text-muted">Shortlisted</small>
+            <div class="fs-5 fw-semibold">@Model.ShortlistCount</div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-body">
+        <form method="get" class="row g-2">
+            <div class="col-md-3">
+                <label class="form-label mb-1">Min Age</label>
+                <input asp-for="Filter.MinAge" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label mb-1">Max Age</label>
+                <input asp-for="Filter.MaxAge" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label mb-1">Religion</label>
+                <select asp-for="Filter.Religion" class="form-select">
+                    <option value="">Any</option>
+                    <option>Hindu</option>
+                    <option>Christian</option>
+                    <option>Muslim</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label mb-1">City</label>
+                <select asp-for="Filter.City" class="form-select">
+                    <option value="">Any</option>
+                    <option>Chennai</option>
+                    <option>Bengaluru</option>
+                    <option>Coimbatore</option>
+                    <option>Madurai</option>
+                </select>
+            </div>
+            <div class="col-12 d-grid d-md-flex">
+                <button type="submit" class="btn btn-danger">Apply Filters</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (!Model.Profiles.Any())
+{
+    <div class="alert alert-info">No profiles found for selected filters.</div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var item in Model.Profiles)
+        {
+            <div class="col-md-6 col-xl-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="mb-1">@item.User.Name</h5>
+                        <div class="text-muted small mb-2">@item.User.Age yrs • @item.Profile.Profession</div>
+                        <div class="small mb-1"><strong>City:</strong> @item.Profile.City</div>
+                        <div class="small mb-1"><strong>Religion:</strong> @item.Profile.Religion</div>
+                        <div class="small text-muted mb-3">@item.Profile.About</div>
+
+                        <div class="d-flex gap-2">
+                            <form asp-action="ToggleInterest" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="toUserId" value="@item.User.Id" />
+                                <button type="submit" class="btn @(item.IsInterestSent ? "btn-success" : "btn-outline-danger") btn-sm">
+                                    @(item.IsInterestSent ? "Interest Sent" : "Send Interest")
+                                </button>
+                            </form>
+
+                            <form asp-action="ToggleShortlist" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="toUserId" value="@item.User.Id" />
+                                <button type="submit" class="btn @(item.IsShortlisted ? "btn-danger" : "btn-outline-secondary") btn-sm">
+                                    @(item.IsShortlisted ? "Shortlisted" : "Shortlist")
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

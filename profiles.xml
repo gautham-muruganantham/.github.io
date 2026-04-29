@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<profiles>
+  <profile userId="u001" religion="Hindu" city="Chennai" profession="Software Engineer" about="I enjoy travel and books." />
+  <profile userId="u002" religion="Hindu" city="Chennai" profession="Data Analyst" about="Family-oriented and calm." />
+  <profile userId="u003" religion="Christian" city="Bengaluru" profession="Product Designer" about="Creative and positive mindset." />
+  <profile userId="u004" religion="Hindu" city="Madurai" profession="Doctor" about="Passionate about healthcare." />
+  <profile userId="u005" religion="Hindu" city="Coimbatore" profession="Project Manager" about="Simple and practical person." />
+</profiles>
