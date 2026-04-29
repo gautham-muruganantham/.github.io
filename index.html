@@ -3,298 +3,283 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MatrimonyMatch - Demo</title>
+  <title>MatrimonyMatch Demo</title>
   <style>
     :root{
-      --primary:#e11d48;
-      --primary-dark:#be123c;
-      --accent:#f59e0b;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --bg:#fff7f9;
-      --card:#ffffff;
-      --border:#e5e7eb;
-      --shadow:0 10px 25px rgba(0,0,0,.08);
+      --primary:#e11d48;--primary-dark:#be123c;--text:#1f2937;--muted:#6b7280;
+      --bg:#fff7f9;--card:#fff;--border:#e5e7eb;--ok:#16a34a;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:#fff}
-    a{text-decoration:none;color:inherit}
-    .container{max-width:1150px;margin:0 auto;padding:0 16px}
-
-    .topbar{background:#111827;color:#fff;font-size:13px}
-    .topbar .container{padding:8px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-    .nav{border-bottom:1px solid var(--border);background:#fff;position:sticky;top:0;z-index:20}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .logo{font-weight:800;font-size:1.2rem;color:var(--primary)}
-    .menu{display:flex;gap:18px;font-size:.95rem}
-    .menu a{color:#374151}
-    .btn{border:none;border-radius:10px;padding:11px 16px;font-weight:600;cursor:pointer}
-    .btn-primary{background:var(--primary);color:#fff}
-    .btn-primary:hover{background:var(--primary-dark)}
-    .btn-light{background:#fff;border:1px solid var(--border)}
-
-    .hero{
-      background:linear-gradient(120deg,#fff1f2 0%,#fff 45%,#fff 100%);
-      padding:52px 0 30px;
-    }
-    .hero-grid{
-      display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;
-    }
-    .hero h1{font-size:2.3rem;line-height:1.2;margin:0 0 10px}
-    .hero p{color:var(--muted);margin:0 0 18px}
-    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-    .badge{padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:.8rem}
-    .stat-row{display:flex;gap:14px;flex-wrap:wrap}
-    .stat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 12px;min-width:130px}
-    .stat b{display:block;font-size:1.1rem}
-
-    .search-card{
-      background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:16px;
-    }
-    .search-title{font-size:1.05rem;font-weight:700;margin-bottom:12px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .form-grid .full{grid-column:1/-1}
-    input,select{
-      width:100%;padding:11px;border:1px solid #d1d5db;border-radius:10px;background:#fff;
-    }
-
-    section{padding:42px 0}
-    .section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:16px}
-    .section-head h2{margin:0;font-size:1.5rem}
-    .section-head p{margin:6px 0 0;color:var(--muted)}
-
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .card{
-      border:1px solid var(--border);border-radius:14px;background:#fff;padding:14px;
-    }
-    .profile-top{display:flex;gap:12px;align-items:center}
-    .avatar{
-      width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-      font-weight:700;background:#ffe4e6;color:#9f1239
-    }
-    .meta{color:var(--muted);font-size:.92rem}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:#fff}
+    .container{max-width:1120px;margin:auto;padding:0 16px}
+    .top{border-bottom:1px solid var(--border);background:#fff;position:sticky;top:0;z-index:10}
+    .top .row{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+    .logo{font-weight:800;color:var(--primary)} .btn{border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-dark)}
+    .btn-light{background:#fff;border:1px solid var(--border)} .btn-ok{background:var(--ok);color:#fff}
+    .hidden{display:none!important} .muted{color:var(--muted)} .small{font-size:.9rem}
+    .auth-wrap{min-height:calc(100vh - 60px);display:grid;grid-template-columns:1.1fr 1fr;background:linear-gradient(120deg,#fff1f2,#fff)}
+    .auth-left{padding:48px 24px}.auth-left h1{margin:0 0 8px;font-size:2rem}
+    .auth-right{display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+    .auth-card{width:100%;max-width:420px}
+    .tabs{display:flex;gap:8px;margin-bottom:12px}.tab{flex:1;padding:10px;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
+    .tab.active{background:#ffe4eb;border-color:#fecdd3;color:#9f1239;font-weight:700}
+    label{display:block;font-size:.85rem;margin:8px 0 5px;color:#374151}
+    input,select{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:10px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .gap{height:10px} .msg{padding:10px;border-radius:10px;font-size:.9rem;margin-top:10px}
+    .msg.err{background:#fef2f2;color:#991b1b}.msg.ok{background:#ecfdf5;color:#065f46}
+    .app{padding:24px 0;background:var(--bg);min-height:calc(100vh - 60px)}
+    .panel{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+    .stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px}
+    .filters{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+    .profiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .profile{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px}
+    .topline{display:flex;gap:10px;align-items:center}
+    .avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#ffe4e6;color:#9f1239;font-weight:800}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#f3f4f6;font-size:.75rem;margin-top:8px}
-
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .step{border:1px solid var(--border);border-radius:12px;padding:14px;background:#fff}
-    .step b{display:block;margin-bottom:6px;color:var(--primary)}
-
-    .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .plan{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff}
-    .plan h3{margin:0}
-    .price{font-size:1.7rem;font-weight:800;color:var(--primary);margin:8px 0}
-    .plan ul{margin:10px 0 0 16px;color:#4b5563;padding:0}
-
-    .cta{
-      background:linear-gradient(90deg,#e11d48,#fb7185);color:#fff;border-radius:18px;padding:24px;
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-    }
-
-    footer{padding:28px 0;color:var(--muted);font-size:.9rem;text-align:center;border-top:1px solid var(--border);margin-top:34px}
-
-    @media (max-width:960px){
-      .hero-grid{grid-template-columns:1fr}
-      .cards,.plans{grid-template-columns:1fr 1fr}
-      .steps{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width:640px){
-      .menu{display:none}
-      .cards,.plans,.steps,.form-grid{grid-template-columns:1fr}
-    }
+    @media (max-width:960px){.auth-wrap{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(2,1fr)}.profiles{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.profiles,.filters,.stats{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="container">
-      <div>Demo matrimony website (sample project)</div>
-      <div>Verified Profiles • Safe Search • Mobile Friendly</div>
-    </div>
-  </div>
-
-  <nav class="nav">
-    <div class="container nav-inner">
+  <header class="top">
+    <div class="container row">
       <div class="logo">MatrimonyMatch</div>
-      <div class="menu">
-        <a href="#profiles">Profiles</a>
-        <a href="#how">How it works</a>
-        <a href="#plans">Plans</a>
-      </div>
-      <button class="btn btn-light">Login</button>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <h1>Find your life partner with confidence</h1>
-        <p>Inspired by popular matrimony portals — this is a clean demo with search, featured profiles, plans, and responsive UI.</p>
-        <div class="badges">
-          <span class="badge">100% Demo</span>
-          <span class="badge">No real users</span>
-          <span class="badge">GitHub Pages Ready</span>
-        </div>
-        <div class="stat-row">
-          <div class="stat"><b>10,000+</b><span class="meta">Demo Profiles</span></div>
-          <div class="stat"><b>120+</b><span class="meta">Cities</span></div>
-          <div class="stat"><b>95%</b><span class="meta">Profile Verified</span></div>
-        </div>
-      </div>
-
-      <div class="search-card">
-        <div class="search-title">Search profiles</div>
-        <div class="form-grid">
-          <select id="lookingFor">
-            <option value="">Looking for</option>
-            <option>Bride</option>
-            <option>Groom</option>
-          </select>
-          <select id="religion">
-            <option value="">Religion</option>
-            <option>Hindu</option>
-            <option>Christian</option>
-            <option>Muslim</option>
-          </select>
-          <input id="ageFrom" type="number" placeholder="Age from" />
-          <input id="ageTo" type="number" placeholder="Age to" />
-          <select id="city" class="full">
-            <option value="">City</option>
-            <option>Chennai</option>
-            <option>Bengaluru</option>
-            <option>Coimbatore</option>
-            <option>Madurai</option>
-          </select>
-          <button class="btn btn-primary full" onclick="applyFilter()">Search Matches</button>
-        </div>
-      </div>
+      <div id="topRight"><span class="small muted">Demo site</span></div>
     </div>
   </header>
 
-  <section id="profiles">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h2>Featured Profiles</h2>
-          <p>Fresh and highlighted demo matches</p>
-        </div>
-      </div>
-      <div class="cards" id="profileList"></div>
+  <!-- AUTH VIEW -->
+  <section id="authView" class="auth-wrap">
+    <div class="auth-left container">
+      <h1>Trusted Matrimony Login</h1>
+      <p class="muted">BharatMatrimony-style demo flow: password login, OTP login, signup, and profile browsing.</p>
     </div>
-  </section>
+    <div class="auth-right">
+      <div class="card auth-card">
+        <div class="tabs">
+          <button class="tab active" id="tabLogin">Login</button>
+          <button class="tab" id="tabSignup">Sign Up</button>
+        </div>
 
-  <section id="how" style="background:#fff7f9">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h2>How it works</h2>
-          <p>Simple 4-step journey</p>
-        </div>
-      </div>
-      <div class="steps">
-        <div class="step"><b>1. Register</b><div class="meta">Create your profile in 2 minutes.</div></div>
-        <div class="step"><b>2. Search</b><div class="meta">Use filters to find suitable matches.</div></div>
-        <div class="step"><b>3. Connect</b><div class="meta">Send interest and start conversation.</div></div>
-        <div class="step"><b>4. Meet</b><div class="meta">Take your next step with family.</div></div>
-      </div>
-    </div>
-  </section>
+        <div id="loginBox">
+          <label>Email or Mobile</label>
+          <input id="loginIdentifier" placeholder="name@email.com or 9876543210" />
+          <label>Password</label>
+          <input id="loginPassword" type="password" placeholder="Enter password" />
+          <div class="gap"></div>
+          <button class="btn btn-primary" style="width:100%" onclick="loginWithPassword()">Login</button>
 
-  <section id="plans">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h2>Membership Plans</h2>
-          <p>Choose what fits your needs</p>
+          <div class="gap"></div><hr style="border:none;border-top:1px solid #eee"><div class="gap"></div>
+          <label>OTP Login (demo)</label>
+          <div class="row2">
+            <button class="btn btn-light" onclick="sendOtp()">Send OTP</button>
+            <input id="otpCode" placeholder="Enter OTP" />
+          </div>
+          <div class="gap"></div>
+          <button class="btn btn-light" style="width:100%" onclick="loginWithOtp()">Login with OTP</button>
+          <div id="loginMsg"></div>
         </div>
-      </div>
-      <div class="plans">
-        <div class="plan">
-          <h3>Free</h3>
-          <div class="price">₹0</div>
-          <ul><li>Create profile</li><li>Limited search</li><li>Send 5 interests</li></ul>
-        </div>
-        <div class="plan">
-          <h3>Classic</h3>
-          <div class="price">₹999</div>
-          <ul><li>Unlimited search</li><li>View contacts</li><li>Priority support</li></ul>
-        </div>
-        <div class="plan">
-          <h3>Premium</h3>
-          <div class="price">₹1999</div>
-          <ul><li>Top profile visibility</li><li>Direct chat</li><li>Personal relationship manager</li></ul>
+
+        <div id="signupBox" class="hidden">
+          <label>Full Name</label><input id="suName" placeholder="Your name" />
+          <div class="row2">
+            <div><label>Email</label><input id="suEmail" placeholder="you@email.com" /></div>
+            <div><label>Mobile</label><input id="suPhone" placeholder="10 digit mobile" /></div>
+          </div>
+          <div class="row2">
+            <div><label>Gender</label><select id="suGender"><option>Female</option><option>Male</option></select></div>
+            <div><label>Age</label><input id="suAge" type="number" min="18" max="70" placeholder="Age" /></div>
+          </div>
+          <label>Password</label><input id="suPassword" type="password" placeholder="Create password" />
+          <div class="gap"></div>
+          <button class="btn btn-primary" style="width:100%" onclick="signup()">Create Account</button>
+          <div id="signupMsg"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section>
+  <!-- APP VIEW -->
+  <section id="appView" class="app hidden">
     <div class="container">
-      <div class="cta">
-        <div>
-          <h3 style="margin:0 0 6px">Start your matrimony journey today</h3>
-          <div style="opacity:.9">Create your free profile and explore quality matches.</div>
-        </div>
-        <button class="btn btn-light">Create Free Profile</button>
+      <div class="stats">
+        <div class="stat"><b id="s1">0</b><div class="small muted">Profiles shown</div></div>
+        <div class="stat"><b id="s2">0</b><div class="small muted">Interests sent</div></div>
+        <div class="stat"><b id="s3">0</b><div class="small muted">Shortlisted</div></div>
+        <div class="stat"><b id="s4">0</b><div class="small muted">My age</div></div>
       </div>
+
+      <div class="panel">
+        <div class="filters">
+          <input id="fSearch" placeholder="Search by name/profession" />
+          <input id="fAgeMin" type="number" placeholder="Min age" />
+          <input id="fAgeMax" type="number" placeholder="Max age" />
+          <select id="fReligion"><option value="">Any religion</option><option>Hindu</option><option>Christian</option><option>Muslim</option></select>
+          <select id="fCity"><option value="">Any city</option><option>Chennai</option><option>Bengaluru</option><option>Coimbatore</option><option>Madurai</option></select>
+        </div>
+        <div class="gap"></div>
+        <button class="btn btn-primary" onclick="renderProfiles()">Apply Filters</button>
+      </div>
+
+      <div id="profileList" class="profiles"></div>
     </div>
   </section>
-
-  <footer>
-    © 2026 MatrimonyMatch Demo • Built for sample use only (not affiliated with any brand).
-  </footer>
 
   <script>
-    const profiles = [
-      {name:"Ananya R", age:26, religion:"Hindu", city:"Chennai", role:"Software Engineer", lookingFor:"Groom"},
-      {name:"Karthik S", age:29, religion:"Hindu", city:"Coimbatore", role:"Data Analyst", lookingFor:"Bride"},
-      {name:"Priya M", age:28, religion:"Christian", city:"Bengaluru", role:"Product Designer", lookingFor:"Groom"},
-      {name:"Rahman A", age:27, religion:"Muslim", city:"Chennai", role:"Architect", lookingFor:"Bride"},
-      {name:"Deepa N", age:25, religion:"Hindu", city:"Madurai", role:"Doctor", lookingFor:"Groom"},
-      {name:"Joel P", age:30, religion:"Christian", city:"Coimbatore", role:"Consultant", lookingFor:"Bride"}
+    const seedProfiles = [
+      {id:1,name:"Ananya R",gender:"Female",age:26,religion:"Hindu",city:"Chennai",profession:"Software Engineer"},
+      {id:2,name:"Karthik S",gender:"Male",age:29,religion:"Hindu",city:"Coimbatore",profession:"Data Analyst"},
+      {id:3,name:"Priya M",gender:"Female",age:28,religion:"Christian",city:"Bengaluru",profession:"Product Designer"},
+      {id:4,name:"Rahman A",gender:"Male",age:27,religion:"Muslim",city:"Chennai",profession:"Architect"},
+      {id:5,name:"Deepa N",gender:"Female",age:25,religion:"Hindu",city:"Madurai",profession:"Doctor"},
+      {id:6,name:"Joel P",gender:"Male",age:30,religion:"Christian",city:"Coimbatore",profession:"Consultant"},
+      {id:7,name:"Divya L",gender:"Female",age:27,religion:"Hindu",city:"Bengaluru",profession:"HR Manager"},
+      {id:8,name:"Arun V",gender:"Male",age:31,religion:"Hindu",city:"Chennai",profession:"Project Manager"}
     ];
+    let otpMap = {};
 
-    function render(list){
-      const root = document.getElementById("profileList");
-      root.innerHTML = "";
-      if(!list.length){
-        root.innerHTML = `<div class="card"><div class="meta">No profiles found for selected filters.</div></div>`;
-        return;
-      }
-      list.forEach(p => {
-        const initials = p.name.split(" ").map(v => v[0]).join("").slice(0,2);
-        root.innerHTML += `
-          <div class="card">
-            <div class="profile-top">
-              <div class="avatar">${initials}</div>
-              <div>
-                <div style="font-weight:700">${p.name}</div>
-                <div class="meta">${p.age} yrs • ${p.role}</div>
-              </div>
-            </div>
-            <div class="meta" style="margin-top:8px">${p.city} • ${p.religion}</div>
-            <span class="pill">Verified</span>
-          </div>
-        `;
-      });
+    const $ = (id)=>document.getElementById(id);
+    const getJSON = (k,d)=>JSON.parse(localStorage.getItem(k)||JSON.stringify(d));
+    const setJSON = (k,v)=>localStorage.setItem(k,JSON.stringify(v));
+
+    function getUsers(){ return getJSON("mm_users", []); }
+    function setUsers(v){ setJSON("mm_users", v); }
+    function currentUserId(){ return localStorage.getItem("mm_current_user_id"); }
+    function setCurrentUserId(id){ if(id) localStorage.setItem("mm_current_user_id", id); else localStorage.removeItem("mm_current_user_id"); }
+    function currentUser(){ return getUsers().find(u => String(u.id) === String(currentUserId())); }
+
+    function getActions(uid){ return getJSON("mm_actions_"+uid, {interests:[], shortlist:[]}); }
+    function setActions(uid,val){ setJSON("mm_actions_"+uid, val); }
+
+    function showMsg(id,type,text){
+      $(id).innerHTML = `<div class="msg ${type}">${text}</div>`;
     }
 
-    function applyFilter(){
-      const lookingFor = document.getElementById("lookingFor").value;
-      const religion = document.getElementById("religion").value;
-      const city = document.getElementById("city").value;
-      const ageFrom = Number(document.getElementById("ageFrom").value || 0);
-      const ageTo = Number(document.getElementById("ageTo").value || 99);
+    function findUserByIdentifier(identifier){
+      const key = (identifier||"").trim().toLowerCase();
+      return getUsers().find(u => u.email.toLowerCase()===key || u.phone===key);
+    }
 
-      const filtered = profiles.filter(p =>
-        (!lookingFor || p.lookingFor === lookingFor) &&
-        (!religion || p.religion === religion) &&
-        (!city || p.city === city) &&
-        p.age >= ageFrom && p.age <= ageTo
+    function signup(){
+      const name=$("suName").value.trim(), email=$("suEmail").value.trim().toLowerCase(), phone=$("suPhone").value.trim();
+      const gender=$("suGender").value, age=Number($("suAge").value), password=$("suPassword").value;
+      if(!name || !email || !phone || !age || !password){ return showMsg("signupMsg","err","Please fill all fields."); }
+      if(phone.length<10){ return showMsg("signupMsg","err","Enter valid mobile number."); }
+      const users=getUsers();
+      if(users.some(u=>u.email===email || u.phone===phone)) return showMsg("signupMsg","err","Email or mobile already registered.");
+      const user={id:Date.now(),name,email,phone,gender,age,password};
+      users.push(user); setUsers(users);
+      showMsg("signupMsg","ok","Account created. Please login.");
+      $("tabLogin").click();
+    }
+
+    function loginWithPassword(){
+      const idf=$("loginIdentifier").value.trim(), pwd=$("loginPassword").value;
+      const user=findUserByIdentifier(idf);
+      if(!user || user.password!==pwd) return showMsg("loginMsg","err","Invalid credentials.");
+      setCurrentUserId(user.id); renderApp();
+    }
+
+    function sendOtp(){
+      const idf=$("loginIdentifier").value.trim(); const user=findUserByIdentifier(idf);
+      if(!user) return showMsg("loginMsg","err","User not found.");
+      const otp=String(Math.floor(100000+Math.random()*900000));
+      otpMap[idf.toLowerCase()] = otp;
+      showMsg("loginMsg","ok","Demo OTP sent: <b>"+otp+"</b>");
+    }
+
+    function loginWithOtp(){
+      const idf=$("loginIdentifier").value.trim().toLowerCase(), code=$("otpCode").value.trim();
+      const user=findUserByIdentifier(idf);
+      if(!user) return showMsg("loginMsg","err","User not found.");
+      if(otpMap[idf]!==code) return showMsg("loginMsg","err","Invalid OTP.");
+      setCurrentUserId(user.id); renderApp();
+    }
+
+    function logout(){ setCurrentUserId(null); renderApp(); }
+
+    function toggleAction(type, profileId){
+      const user=currentUser(); if(!user) return;
+      const a=getActions(user.id), list=a[type];
+      const i=list.indexOf(profileId); if(i>=0) list.splice(i,1); else list.push(profileId);
+      setActions(user.id,a); renderProfiles();
+    }
+
+    function filteredProfiles(){
+      const user=currentUser(); if(!user) return [];
+      const q=$("fSearch").value.trim().toLowerCase(), min=Number($("fAgeMin").value||18), max=Number($("fAgeMax").value||70);
+      const religion=$("fReligion").value, city=$("fCity").value;
+      const oppositeGender = user.gender==="Male" ? "Female" : "Male";
+
+      return seedProfiles.filter(p =>
+        p.gender===oppositeGender &&
+        p.age>=min && p.age<=max &&
+        (!religion || p.religion===religion) &&
+        (!city || p.city===city) &&
+        (!q || p.name.toLowerCase().includes(q) || p.profession.toLowerCase().includes(q))
       );
-      render(filtered);
     }
 
-    render(profiles);
+    function renderProfiles(){
+      const user=currentUser(); if(!user) return;
+      const data=filteredProfiles(), a=getActions(user.id), root=$("profileList");
+      root.innerHTML="";
+      if(!data.length){ root.innerHTML=`<div class="panel">No profiles found.</div>`; updateStats(0,a,user); return; }
+
+      data.forEach(p=>{
+        const initials=p.name.split(" ").map(x=>x[0]).join("").slice(0,2);
+        const interested=a.interests.includes(p.id), shortlisted=a.shortlist.includes(p.id);
+        root.innerHTML += `
+          <div class="profile">
+            <div class="topline">
+              <div class="avatar">${initials}</div>
+              <div><b>${p.name}</b><div class="small muted">${p.age} yrs • ${p.profession}</div></div>
+            </div>
+            <div class="small muted" style="margin-top:8px">${p.city} • ${p.religion}</div>
+            <span class="pill">Verified Profile</span>
+            <div class="actions">
+              <button class="btn ${interested?'btn-ok':'btn-light'}" onclick="toggleAction('interests',${p.id})">${interested?'Interest Sent':'Send Interest'}</button>
+              <button class="btn ${shortlisted?'btn-primary':'btn-light'}" onclick="toggleAction('shortlist',${p.id})">${shortlisted?'Shortlisted':'Shortlist'}</button>
+            </div>
+          </div>`;
+      });
+      updateStats(data.length,a,user);
+    }
+
+    function updateStats(shown,a,u){
+      $("s1").textContent = shown;
+      $("s2").textContent = a.interests.length;
+      $("s3").textContent = a.shortlist.length;
+      $("s4").textContent = u.age;
+    }
+
+    function renderApp(){
+      const user=currentUser();
+      if(user){
+        $("authView").classList.add("hidden");
+        $("appView").classList.remove("hidden");
+        $("topRight").innerHTML = `<span class="small muted">Hi, ${user.name}</span> <button class="btn btn-light" onclick="logout()">Logout</button>`;
+        renderProfiles();
+      }else{
+        $("appView").classList.add("hidden");
+        $("authView").classList.remove("hidden");
+        $("topRight").innerHTML = `<span class="small muted">Demo site</span>`;
+      }
+    }
+
+    // tabs
+    $("tabLogin").onclick=()=>{ $("tabLogin").classList.add("active"); $("tabSignup").classList.remove("active"); $("loginBox").classList.remove("hidden"); $("signupBox").classList.add("hidden"); };
+    $("tabSignup").onclick=()=>{ $("tabSignup").classList.add("active"); $("tabLogin").classList.remove("active"); $("signupBox").classList.remove("hidden"); $("loginBox").classList.add("hidden"); };
+
+    // bootstrap
+    if(!getUsers().length){
+      setUsers([{id:1001,name:"Demo User",email:"demo@matrimony.com",phone:"9876543210",gender:"Male",age:29,password:"Demo@123"}]);
+    }
+    renderApp();
   </script>
 </body>
 </html>
